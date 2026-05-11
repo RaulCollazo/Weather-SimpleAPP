@@ -1,6 +1,10 @@
 import requests
 import json
+import redis
 
+
+
+r = redis.Redis(host = 'localHost', port = '6379' , decode_responses = True)
 
 def requestCiudad ():
     ciudad = str(input("Por favor ingrese su ciudad: "))
@@ -12,7 +16,8 @@ def requestCiudad ():
 estado = requestCiudad().json()
 estadoActual = estado["currentConditions"]
 
+
+
 print("Temperatura:", estadoActual["temp"])
 print("Condición:", estadoActual["conditions"])
 
-#print(json.dumps(requestCiudad().json(), indent=4, ensure_ascii=False))
