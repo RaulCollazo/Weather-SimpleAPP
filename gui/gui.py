@@ -3,7 +3,7 @@ from pathlib import Path
 
 icon_path = Path(__file__).resolve().parent.parent / "source" / "icon.png"
 
-def create_layout():
+def create_layout(on_search_callback=None):
     root = tk.Tk()
     root.title("Weather App")
     root.geometry("700x700")
@@ -12,7 +12,7 @@ def create_layout():
     root.configure(bg="#a9c9ff")
 
     search_frame = tk.Frame(root, bg="#a9c9ff")
-    search_frame.pack(pady=30)
+    search_frame.pack(side="bottom", anchor="center", pady=80)
 
     city_label = tk.Label(
         search_frame,
@@ -34,11 +34,11 @@ def create_layout():
     )
     city_entry.grid(row=0, column=1, padx=(0, 8))
 
-    # Botón de búsqueda
     def on_search():
         city = city_entry.get().strip()
-        if city:
-            print(f"Buscando: {city}")
+        if city and on_search_callback:
+            on_search_callback(city)
+            city_entry.delete(0, tk.END)
 
     search_btn = tk.Button(
         search_frame,
@@ -55,5 +55,3 @@ def create_layout():
     search_btn.grid(row=0, column=2)
 
     root.mainloop()
-
-create_layout()
